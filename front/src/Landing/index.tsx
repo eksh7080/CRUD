@@ -1,15 +1,41 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { NavContainer } from './style';
 
 const Landing = () => {
+    const navigate = useNavigate();
+    const token = localStorage.getItem('token');
+    const [login, setLogin] = useState<boolean>(token ? true : false);
+
+    const logout = () => {
+        localStorage.clear();
+        setLogin(!login);
+    };
+
     return (
-        <>
-            <Link to="/login" style={{ fontSize: '3rem' }}>
-                로그인
-            </Link>
-            <Link to="/signup" style={{ display: 'block', fontSize: '3rem' }}>
-                회원가입
-            </Link>
-        </>
+        <NavContainer>
+            {token ? (
+                <ul className="onToken">
+                    <li>
+                        <button type="button" onClick={logout}>
+                            로그아웃
+                        </button>
+                    </li>
+                    <li>
+                        <Link to="/todo">투두</Link>
+                    </li>
+                </ul>
+            ) : (
+                <ul className="noneToken">
+                    <li>
+                        <Link to="/login">로그인</Link>
+                    </li>
+                    <li>
+                        <Link to="/signup">회원가입</Link>
+                    </li>
+                </ul>
+            )}
+        </NavContainer>
     );
 };
 

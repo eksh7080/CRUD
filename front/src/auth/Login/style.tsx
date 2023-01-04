@@ -2,9 +2,11 @@ import styled from '@emotion/styled';
 
 export const Container = styled.section`
     display: flex;
-    flex-direction: row;
     max-width: 128rem;
     min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
 `;
 
 export const LoginSection = styled.div`
@@ -25,16 +27,9 @@ export const LoginSection = styled.div`
 
     & form {
         text-align: center;
-        transform: translateY(30vh);
         max-width: 46rem;
         width: 100%;
         height: 50%;
-
-        @media all and (max-width: 960px) {
-            text-align: center;
-            transform: unset;
-            transform: translateY(4vh);
-        }
 
         & p {
             display: flex;
@@ -95,46 +90,21 @@ export const LoginSection = styled.div`
                     font-size: 1.4rem;
                     font-weight: 600;
 
-                    & .loginBtn {
-                        padding: 1.6rem 2rem;
-                        border: 0;
-                        background-color: #d3d3d3;
-                        border-radius: 0.4rem;
-                        font-size: 1.4rem;
-                        line-height: 2.2rem;
-                        width: 100%;
-                        font-weight: 600;
-
-                        &:hover {
-                            cursor: pointer;
-                            background-color: gray;
-                        }
-                    }
-                }
-
-                & .kakaoLogin {
-                    margin-top: 1rem;
                     & li {
-                        background-color: #fee500;
-                        width: 100%;
-                        font-size: 1.4rem;
-                        font-weight: 600;
-                        padding: 1.6rem 0;
-                        border-radius: 1.2rem;
-
-                        &:hover {
-                            cursor: pointer;
-                            background-color: yellow;
-                        }
-
-                        & span {
-                            vertical-align: middle;
-                        }
-
-                        & button[type='button'] {
-                            color: rgba(0, 0, 0, 0.85);
-                            background: none;
+                        & button[type='submit'] {
+                            padding: 1.6rem 2rem;
                             border: 0;
+                            background-color: #d3d3d3;
+                            border-radius: 0.4rem;
+                            font-size: 1.4rem;
+                            line-height: 2.2rem;
+                            width: 100%;
+                            font-weight: 600;
+
+                            &:hover {
+                                cursor: pointer;
+                                background-color: gray;
+                            }
                         }
                     }
                 }

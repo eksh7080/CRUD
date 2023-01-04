@@ -1,24 +1,79 @@
 import { Container, LoginSection } from './style';
+import { Link, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import React, { useState } from 'react';
 
 const Login = () => {
+    const navigate = useNavigate();
+
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+
+    const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const target = e.target;
+        const name = target.name;
+        const value = target.value;
+
+        switch (name) {
+            case 'email': {
+                setEmail(value);
+                break;
+            }
+
+            case 'password': {
+                setPassword(value);
+            }
+        }
+    };
+
+    const onSubmitLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+
+        try {
+            const res = await axios.post(`/users/login`, {
+                email: email,
+                password: password,
+            });
+
+            if (res.status === 200) {
+                localStorage.setItem('token', res.data.token);
+                navigate('/');
+            }
+        } catch (err: unknown) {
+            console.log(err);
+            alert('이메일 또는 비밀번호를 확인하여주십시오.');
+        }
+    };
+
     return (
         <Container>
             <LoginSection>
-                <form>
+                <form onSubmit={onSubmitLogin}>
                     <div className="loginWrap">
-                        <h1>LOGIN</h1>
+                        <h1>
+                            <Link to="/">LOGIN</Link>
+                        </h1>
 
-                        <input type="email" placeholder="email" autoComplete="off" />
+                        <input
+                            type="email"
+                            name="email"
+                            required
+                            placeholder="이메일"
+                            autoComplete="off"
+                            onChange={changeValue}
+                        />
 
                         <input
                             type="password"
-                            placeholder="비밀번호 입력"
-                            autoComplete="new-password"
+                            name="password"
+                            required
+                            placeholder="비밀번호"
+                            autoComplete="off"
+                            onChange={changeValue}
                         />
 
                         <div className="util">
-                            <a href="#">회원가입 </a>
-                            <a href="#">비밀번호 찾기</a>
+                            <Link to="/signup">회원가입</Link>
                         </div>
 
                         <article>
@@ -27,11 +82,6 @@ const Login = () => {
                                     <button type="submit" className="loginBtn">
                                         로그인
                                     </button>
-                                </li>
-                            </ul>
-                            <ul className="kakaoLogin">
-                                <li>
-                                    <button type="button">카카오 로그인</button>
                                 </li>
                             </ul>
                         </article>

@@ -29,6 +29,12 @@ export const SignupSection = styled.div`
         display: none;
     }
 
+    .disabled {
+        &:hover {
+            cursor: not-allowed;
+        }
+    }
+
     & form {
         max-width: 46rem;
         width: 100%;
@@ -91,11 +97,7 @@ export const SignupSection = styled.div`
                     line-height: 2.2rem;
                     width: 100%;
                     font-weight: 600;
-
-                    &:hover {
-                        cursor: pointer;
-                        background-color: gray;
-                    }
+                    cursor: pointer;
                 }
             }
         }

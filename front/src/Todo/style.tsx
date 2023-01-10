@@ -72,10 +72,23 @@ export const TodoWrap = styled.div`
                             font-size: 1.4rem;
 
                             &:hover {
-                                color: red;
                                 cursor: pointer;
                             }
                         }
+                    }
+                }
+
+                & .updateForm {
+                    & input[type='text'] {
+                        border: 1px solid skyblue;
+                        border-radius: 0.4rem;
+                        padding: 1rem 0;
+                        text-indent: 1rem;
+                        margin-right: 0.6rem;
+                    }
+
+                    & input[type='text']:last-of-type {
+                        margin-right: 0;
                     }
                 }
             }

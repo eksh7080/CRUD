@@ -17,12 +17,16 @@ const Todo = () => {
     }
 
     const LOGINTOKEN = localStorage.getItem('token');
+
     const [updateFormState, setUpdateFormState] = useState<boolean>(false);
     const [todoList, setTodoList] = useState<TodoList[]>([]);
     const [todoValue, setTodoValue] = useState<TodoData>({
         title: '',
         content: '',
     });
+    const [updateIndex, setUpdateIndex] = useState<boolean[]>(
+        Array.from([{ length: todoList.length }], () => false),
+    );
 
     const changeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
         const target = e.target;
@@ -92,9 +96,9 @@ const Todo = () => {
         }
     };
 
-    const updateForm = (id: string) => {
-        setUpdateFormState(!updateFormState);
-    };
+    const updateForm = (id: string) => {};
+
+    console.log(updateIndex, ' index', todoList.length);
 
     // const updateTodo = async (id: string) => {
     //     try{
@@ -160,20 +164,40 @@ const Todo = () => {
                             {todoList.map((tem, idx) => {
                                 return (
                                     <dl key={idx}>
-                                        {/* {updateFormState ? (
-                                            <form>
-                                                <input type="text" value={tem.title} onChange={} 
+                                        {updateFormState ? (
+                                            <form className="updateForm">
+                                                <input
+                                                    type="text"
+                                                    name="title"
+                                                    value={tem.title}
+                                                    onChange={changeInputValue}
+                                                />
+                                                <input
+                                                    type="text"
+                                                    name="content"
+                                                    value={tem.content}
+                                                    onChange={changeInputValue}
+                                                />
+                                                <p>
+                                                    <button
+                                                        type="submit"
+                                                        className="updateConfirm"
+                                                        onClick={(): void =>
+                                                            setUpdateFormState(false)
+                                                        }
+                                                    >
+                                                        저장
+                                                    </button>
+                                                </p>
                                             </form>
                                         ) : (
                                             <>
                                                 <dt>{tem.title}</dt>
                                                 <dd>{tem.content}</dd>
                                             </>
-                                        )} */}
-                                        <dt>{tem.title}</dt>
-                                        <dd>{tem.content}</dd>
+                                        )}
 
-                                        <dd>
+                                        <dd key={idx}>
                                             <label>
                                                 <button
                                                     type="button"

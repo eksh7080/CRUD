@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 
 export const NavContainer = styled.section`
     max-width: 100%;
-    background-color: #d3d3d3;
+    background-color: skyblue;
     padding: 6rem;
 
     & .onToken {

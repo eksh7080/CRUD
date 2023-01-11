@@ -7,13 +7,12 @@ import Todo from 'Todo';
 
 function App() {
     const token = localStorage.getItem('token');
-    const [login, setLogin] = useState<boolean>(token ? true : false);
 
     return (
         <>
             <BrowserRouter>
                 <Routes>
-                    {login && (
+                    {token && (
                         <>
                             <Route path="/" element={<Landing />}></Route>
                             <Route path="/todo" element={<Todo />}></Route>

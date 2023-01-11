@@ -1,23 +1,9 @@
-import axios from 'axios';
+import { API } from 'Instance';
 import React, { useEffect, useState } from 'react';
 import { Container, TodoWrap } from './style';
+import { TodoData, TodoList } from 'types/todoType';
 
 const Todo = () => {
-    interface TodoList {
-        id: string;
-        title: string;
-        content: string;
-        createdAt: string;
-        updatedAt: string;
-    }
-
-    interface TodoData {
-        title: string;
-        content: string;
-    }
-
-    const LOGINTOKEN = localStorage.getItem('token');
-
     const [updateFormState, setUpdateFormState] = useState<boolean>(false);
     const [todoList, setTodoList] = useState<TodoList[]>([]);
     const [todoValue, setTodoValue] = useState<TodoData>({
@@ -51,16 +37,10 @@ const Todo = () => {
                 return;
             }
 
-            const res = await axios.post(
-                `/todos`,
-                {
-                    title: todoValue.title,
-                    content: todoValue.content,
-                },
-                {
-                    headers: { Authorization: `login ${LOGINTOKEN}` },
-                },
-            );
+            const res = await API.post(`/todos`, {
+                title: todoValue.title,
+                content: todoValue.content,
+            });
 
             const todoData = res.data.data;
 
@@ -75,6 +55,7 @@ const Todo = () => {
                         updatedAt: todoData.updatedAt,
                     },
                 ]);
+                setTodoValue({ title: '', content: '' });
             }
 
             console.log(res.data.data, 'create', todoData);
@@ -85,38 +66,39 @@ const Todo = () => {
 
     const deleteTodo = async (id: string) => {
         try {
-            const res = await axios.delete(`/todos/${id}`, {
-                headers: { Authorization: `login ${LOGINTOKEN}` },
-            });
+            if (window.confirm('삭제 하시겠습니까?')) {
+                const res = await API.delete(`/todos/${id}`);
 
-            const filtered = todoList.filter(tem => tem.id !== id);
-            setTodoList(filtered);
+                const filtered = todoList.filter(tem => tem.id !== id);
+                setTodoList(filtered);
+            } else {
+                return;
+            }
         } catch (err: unknown) {
             console.log(err);
         }
     };
 
-    const updateForm = (id: string) => {};
+    const changeUpdateForm = (id: string, idx: number, e: React.MouseEvent<HTMLButtonElement>) => {
+        console.log(id, 'id idi di di di dididi ', idx, e);
+        if (idx === idx) setUpdateFormState(!updateFormState);
+    };
 
-    console.log(updateIndex, ' index', todoList.length);
-
-    // const updateTodo = async (id: string) => {
-    //     try{
-    //         const res = await axios.put(`/todos/${id}`, {
-    //             title:
-    //         } , {
-    //             headers: { Authorization: `login ${LOGINTOKEN}` }
-    //         })
-    //     }catch(err: unknown){
-    //         console.log(err)
-    //     }
-    // }
+    const updateTodo = async (id: string) => {
+        try {
+            const res = await API.put(`/todos/${id}`, {
+                title: todoValue.title,
+                content: todoValue.content,
+            });
+            console.log(res, 'update update');
+        } catch (err: unknown) {
+            console.log(err);
+        }
+    };
 
     const getTodoList = async () => {
         try {
-            const res = await axios.get(`/todos`, {
-                headers: { Authorization: `login ${LOGINTOKEN}` },
-            });
+            const res = await API.get(`/todos`);
 
             if (res.status === 200) setTodoList(res.data.data);
             console.log('getTodo', res);
@@ -165,27 +147,24 @@ const Todo = () => {
                                 return (
                                     <dl key={idx}>
                                         {updateFormState ? (
-                                            <form className="updateForm">
+                                            <form
+                                                className="updateForm"
+                                                onSubmit={() => updateTodo(tem.id)}
+                                            >
                                                 <input
                                                     type="text"
                                                     name="title"
-                                                    value={tem.title}
+                                                    defaultValue={tem.title}
                                                     onChange={changeInputValue}
                                                 />
                                                 <input
                                                     type="text"
                                                     name="content"
-                                                    value={tem.content}
+                                                    defaultValue={tem.content}
                                                     onChange={changeInputValue}
                                                 />
                                                 <p>
-                                                    <button
-                                                        type="submit"
-                                                        className="updateConfirm"
-                                                        onClick={(): void =>
-                                                            setUpdateFormState(false)
-                                                        }
-                                                    >
+                                                    <button type="submit" className="updateConfirm">
                                                         저장
                                                     </button>
                                                 </p>
@@ -201,7 +180,7 @@ const Todo = () => {
                                             <label>
                                                 <button
                                                     type="button"
-                                                    onClick={() => updateForm(tem.id)}
+                                                    onClick={e => changeUpdateForm(tem.id, idx, e)}
                                                 >
                                                     수정
                                                 </button>

@@ -13,13 +13,13 @@
 
 ## 2. 화면 동작 기능
 
+## 로그인
 
 
 
 
 
-
-#### 로컬 접속 방법
+#### 실행 방법
 <h2>front - yarn install </h2> 
 <p>src - yarn start</p>
 <p>server - yarn start</p>

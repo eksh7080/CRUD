@@ -19,8 +19,8 @@
 
 
 
-#### 실행 방법
-<h2>front - yarn install </h2> 
+## 실행 방법
+<p>front - yarn install </p> 
 <p>src - yarn start</p>
 <p>server - yarn start</p>
 

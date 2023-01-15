@@ -1,7 +1,7 @@
 import { Container, LoginSection } from './style';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import React, { useState } from 'react';
+import { API } from 'Instance';
 
 const Login = () => {
     const navigate = useNavigate();
@@ -30,7 +30,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const res = await axios.post(`/users/login`, {
+            const res = await API.post(`/users/login`, {
                 email: email,
                 password: password,
             });

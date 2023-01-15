@@ -7,29 +7,21 @@ const Signup = () => {
     const navigate = useNavigate();
     const reg = /@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]/;
 
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
-    const [emailValidate, setEmailValidate] = useState<boolean>(false);
-    const [btnDisabled, setBtnDisabled] = useState<boolean>(true);
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+
+    const isEmailCheck = reg.test(email);
+    const isBtnDisAbled = email.length ? false : true;
+
+    console.log(isEmailCheck, isBtnDisAbled, 'ds');
 
     const emailChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-
-        reg.test(value) ? setEmailValidate(false) : setEmailValidate(true);
-        if (value === '') setEmailValidate(false);
-        setEmail(value);
+        setEmail(e.target.value);
     };
 
     const passwordChangeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const value = e.target.value;
-
-        setPassword(value);
+        setPassword(e.target.value);
     };
-
-    useEffect(() => {
-        if (!(email === '') && password.length > 7) setBtnDisabled(false);
-        else setBtnDisabled(true);
-    }, [email, password]);
 
     const signUp = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -72,9 +64,13 @@ const Signup = () => {
                                 />
                             </li>
 
-                            <li className={`${emailValidate ? 'block' : 'none'}`}>
-                                <label>올바른 이메일 주소를 입력해 주세요.</label>
-                            </li>
+                            {email.length > 1 ? (
+                                <li className={`${isEmailCheck ? 'none' : 'block'}`}>
+                                    <label>올바른 이메일 주소를 입력해 주세요.</label>
+                                </li>
+                            ) : (
+                                ''
+                            )}
 
                             <li>
                                 <label>비밀번호</label>
@@ -94,8 +90,8 @@ const Signup = () => {
                         <div>
                             <button
                                 type="submit"
-                                className={btnDisabled ? 'disabled' : ''}
-                                disabled={btnDisabled ? true : false}
+                                className={isBtnDisAbled ? 'disabled' : ''}
+                                disabled={isBtnDisAbled ? true : false}
                             >
                                 회원가입
                             </button>

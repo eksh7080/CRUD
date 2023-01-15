@@ -10,7 +10,7 @@ export const Container = styled.section`
 `;
 
 export const LoginSection = styled.div`
-    width: 50%;
+    width: 100%;
     display: flex;
     justify-content: center;
 
@@ -29,7 +29,6 @@ export const LoginSection = styled.div`
         text-align: center;
         max-width: 46rem;
         width: 100%;
-        height: 50%;
 
         & p {
             display: flex;

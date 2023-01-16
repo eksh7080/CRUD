@@ -2,6 +2,10 @@ import { API } from 'Instance';
 import React, { useEffect, useState } from 'react';
 import { Container, TodoWrap } from './style';
 import { TodoData, TodoList } from 'types/todoType';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState } from 'Globalstate/store';
+import { changeValue } from 'Globalstate/slices/todoSlice';
+import { useQuery } from '@tanstack/react-query';
 
 const Todo = () => {
     const [updateFormState, setUpdateFormState] = useState<boolean>(false);
@@ -14,10 +18,19 @@ const Todo = () => {
         Array.from([{ length: todoList.length }], () => false),
     );
 
+    const { isLoading, isError, data, error } = useQuery<TodoList[]>({
+        queryKey: ['todoData'],
+        queryFn: () => API.get('/todos').then(res => res.data.data),
+    });
+
+    console.log(data);
+
     const changeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
         const target = e.target;
         const name = target.name;
         const value = target.value;
+
+        // dispatch(changeValue());
 
         switch (name) {
             case 'title':
@@ -96,20 +109,20 @@ const Todo = () => {
         }
     };
 
-    const getTodoList = async () => {
-        try {
-            const res = await API.get(`/todos`);
+    // const getTodoList = async () => {
+    //     try {
+    //         const res = await API.get(`/todos`);
 
-            if (res.status === 200) setTodoList(res.data.data);
-            console.log('getTodo', res);
-        } catch (err: unknown) {
-            console.log(err);
-        }
-    };
+    //         if (res.status === 200) setTodoList(res.data.data);
+    //         console.log('getTodo', res);
+    //     } catch (err: unknown) {
+    //         console.log(err);
+    //     }
+    // };
 
-    useEffect(() => {
-        getTodoList();
-    }, []);
+    // useEffect(() => {
+    //     getTodoList();
+    // }, []);
 
     return (
         <Container>
@@ -137,13 +150,13 @@ const Todo = () => {
                         </li>
                     </ul>
 
-                    {todoList.length === 0 ? (
+                    {data?.length === 0 ? (
                         <>
                             <h1>추가된 투두리스트가 없습니다.</h1>
                         </>
                     ) : (
                         <div>
-                            {todoList.map((tem, idx) => {
+                            {data?.map((tem, idx) => {
                                 return (
                                     <dl key={idx}>
                                         {updateFormState ? (

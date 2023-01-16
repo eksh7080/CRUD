@@ -18,10 +18,6 @@ const Todo = () => {
         Array.from([{ length: todoList.length }], () => false),
     );
 
-    const value = useSelector<RootState>(state => state.todoSlice.inputName);
-    const dispatch = useDispatch();
-    // console.log(value, 'secc succ succ succ');
-
     const { isLoading, isError, data, error } = useQuery<TodoList[]>({
         queryKey: ['todoData'],
         queryFn: () => API.get('/todos').then(res => res.data.data),

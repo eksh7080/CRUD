@@ -8,7 +8,7 @@ const initialState: TodoContent = {
     inputName: '',
 };
 
-export const todoSlice = createSlice({
+const todoSlice = createSlice({
     name: 'todo',
     initialState,
     reducers: {
@@ -19,4 +19,4 @@ export const todoSlice = createSlice({
 });
 
 export const { changeValue } = todoSlice.actions;
-export default todoSlice.reducer;
+export default todoSlice;

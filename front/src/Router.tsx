@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Login from 'auth/Login';
 import Signup from 'auth/Signup';
-import Landing from 'Landing';
+import Home from 'Home';
 import Todo from 'Todo';
 
 const Router = () => {
@@ -12,12 +12,12 @@ const Router = () => {
             <Routes>
                 {token && (
                     <>
-                        <Route path="/" element={<Landing />}></Route>
+                        <Route path="/" element={<Home />}></Route>
                         <Route path="/todo" element={<Todo />}></Route>
                     </>
                 )}
 
-                <Route path="/" element={<Landing />}></Route>
+                <Route path="/" element={<Home />}></Route>
                 <Route path="/login" element={<Login />}></Route>
                 <Route path="/signup" element={<Signup />}></Route>
             </Routes>

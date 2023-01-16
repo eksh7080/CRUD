@@ -1,4 +1,4 @@
-import { API } from 'Instance';
+import { API } from 'utils/api';
 import React, { useEffect, useState } from 'react';
 import { Container, TodoWrap } from './style';
 import { TodoData, TodoList } from 'types/todoType';
@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'Globalstate/store';
 import { changeValue } from 'Globalstate/slices/todoSlice';
 import { useQuery } from '@tanstack/react-query';
+import { getTodoList } from 'utils/queryFn';
 
 const Todo = () => {
     const [updateFormState, setUpdateFormState] = useState<boolean>(false);
@@ -18,9 +19,9 @@ const Todo = () => {
         Array.from([{ length: todoList.length }], () => false),
     );
 
-    const { isLoading, isError, data, error } = useQuery<TodoList[]>({
+    const { data } = useQuery<TodoList[]>({
         queryKey: ['todoData'],
-        queryFn: () => API.get('/todos').then(res => res.data.data),
+        queryFn: () => getTodoList(),
     });
 
     console.log(data);
@@ -151,9 +152,7 @@ const Todo = () => {
                     </ul>
 
                     {data?.length === 0 ? (
-                        <>
-                            <h1>추가된 투두리스트가 없습니다.</h1>
-                        </>
+                        <h1>추가된 투두리스트가 없습니다.</h1>
                     ) : (
                         <div>
                             {data?.map((tem, idx) => {

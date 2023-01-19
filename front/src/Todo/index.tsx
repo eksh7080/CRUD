@@ -7,6 +7,7 @@ import { RootState } from 'Globalstate/store';
 import { changeValue } from 'Globalstate/slices/todoSlice';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { getTodoList, createTodo } from 'utils/queryFn';
+import Header from 'components/Header';
 
 const Todo = () => {
     const [updateFormState, setUpdateFormState] = useState<boolean>(false);

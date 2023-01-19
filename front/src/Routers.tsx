@@ -9,12 +9,14 @@ import { useToken } from 'hooks/useToken';
 const Routers = () => {
     const token = useToken();
     const location = useLocation();
-    const [isLoggedIn, setIsLoggedIn] = useState(token);
+    const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('token'));
     console.log(location);
+
     useEffect(() => {
-        setIsLoggedIn(token);
-    }, [location.pathname, token]);
-    console.log(isLoggedIn, 'toekn');
+        setIsLoggedIn(localStorage.getItem('token'));
+    }, [location.pathname]);
+
+    console.log(isLoggedIn, 'toekn', token);
 
     return (
         <Routes>

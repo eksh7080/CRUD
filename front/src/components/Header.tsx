@@ -1,16 +1,17 @@
 import { useToken } from 'hooks/useToken';
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { NavContainer } from './style';
 
 const Header = () => {
     const token = useToken();
     const location = useLocation();
-    const [isLoggedIn, setIsLoggedIn] = useState(token);
+    const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('token'));
 
     useEffect(() => {
-        setIsLoggedIn(token);
-    }, [location.pathname, token]);
+        setIsLoggedIn(localStorage.getItem('token'));
+    }, [location.pathname]);
 
     const logout = () => {
         localStorage.clear();

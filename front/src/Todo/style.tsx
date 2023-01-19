@@ -9,7 +9,6 @@ export const TodoWrap = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
 
     & article {
         & h1 {

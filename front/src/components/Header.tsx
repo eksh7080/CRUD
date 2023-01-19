@@ -1,23 +1,34 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useToken } from 'hooks/useToken';
+import { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import { NavContainer } from './style';
 
 const Header = () => {
-    const navigate = useNavigate();
-    const token = localStorage.getItem('token');
-    const [login, setLogin] = useState<boolean>(token ? true : false);
+    const token = useToken();
+    const location = useLocation();
+    const [isLoggedIn, setIsLoggedIn] = useState(token);
+
+    useEffect(() => {
+        setIsLoggedIn(token);
+    }, [location.pathname, token]);
+
     const logout = () => {
         localStorage.clear();
-        setLogin(!login);
+        setIsLoggedIn(null);
     };
 
     return (
         <NavContainer>
-            {token ? (
+            {isLoggedIn ? (
                 <ul className="onToken">
                     <li>
                         <button type="button" onClick={logout}>
                             로그아웃
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button">
+                            <Link to="/todo">Todo</Link>
                         </button>
                     </li>
                 </ul>

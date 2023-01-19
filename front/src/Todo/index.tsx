@@ -5,8 +5,8 @@ import { TodoData, TodoList } from 'types/todoType';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from 'Globalstate/store';
 import { changeValue } from 'Globalstate/slices/todoSlice';
-import { useQuery } from '@tanstack/react-query';
-import { getTodoList } from 'utils/queryFn';
+import { useQuery, useMutation } from '@tanstack/react-query';
+import { getTodoList, createTodo } from 'utils/queryFn';
 
 const Todo = () => {
     const [updateFormState, setUpdateFormState] = useState<boolean>(false);
@@ -15,16 +15,15 @@ const Todo = () => {
         title: '',
         content: '',
     });
+
     const [updateIndex, setUpdateIndex] = useState<boolean[]>(
         Array.from([{ length: todoList.length }], () => false),
     );
 
-    const { data } = useQuery<TodoList[]>({
+    const { isLoading, error, data } = useQuery<TodoList[]>({
         queryKey: ['todoData'],
         queryFn: () => getTodoList(),
     });
-
-    console.log(data);
 
     const changeInputValue = (e: React.ChangeEvent<HTMLInputElement>) => {
         const target = e.target;
@@ -44,39 +43,12 @@ const Todo = () => {
         }
     };
 
-    const createTodoList = async () => {
-        try {
-            if (todoValue.title === '' || todoValue.content === '') {
-                alert('내용을 입력해주세요.');
-                return;
-            }
-
-            const res = await API.post(`/todos`, {
-                title: todoValue.title,
-                content: todoValue.content,
-            });
-
-            const todoData = res.data.data;
-
-            if (res.status === 200) {
-                setTodoList([
-                    ...todoList,
-                    {
-                        title: todoData.title,
-                        content: todoData.content,
-                        id: todoData.id,
-                        createdAt: todoData.createdAt,
-                        updatedAt: todoData.updatedAt,
-                    },
-                ]);
-                setTodoValue({ title: '', content: '' });
-            }
-
-            console.log(res.data.data, 'create', todoData);
-        } catch (err: unknown) {
-            console.log(err);
-        }
-    };
+    const { mutate, isSuccess } = useMutation(createTodo, {
+        onSuccess: () => {
+            console.log('success success success');
+        },
+    });
+    console.log(isSuccess, 'create Todo Mutate');
 
     const deleteTodo = async (id: string) => {
         try {
@@ -110,23 +82,9 @@ const Todo = () => {
         }
     };
 
-    // const getTodoList = async () => {
-    //     try {
-    //         const res = await API.get(`/todos`);
-
-    //         if (res.status === 200) setTodoList(res.data.data);
-    //         console.log('getTodo', res);
-    //     } catch (err: unknown) {
-    //         console.log(err);
-    //     }
-    // };
-
-    // useEffect(() => {
-    //     getTodoList();
-    // }, []);
-
     return (
         <Container>
+            <Header />
             <TodoWrap>
                 <article>
                     <ul>
@@ -144,15 +102,15 @@ const Todo = () => {
                                 onChange={changeInputValue}
                             />
                             <span>
-                                <button type="button" onClick={createTodoList}>
+                                <button type="button" onClick={(): void => mutate(todoValue)}>
                                     생성
                                 </button>
                             </span>
                         </li>
                     </ul>
 
-                    {data?.length === 0 ? (
-                        <h1>추가된 투두리스트가 없습니다.</h1>
+                    {isLoading ? (
+                        <h1>Loading...</h1>
                     ) : (
                         <div>
                             {data?.map((tem, idx) => {

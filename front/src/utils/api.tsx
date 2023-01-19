@@ -5,7 +5,7 @@ const LOGIN_TOKEN = localStorage.getItem('token');
 
 const axiosConfig: AxiosRequestConfig = {
     baseURL: BASE_URL,
-    headers: { Authorization: `Login ${LOGIN_TOKEN}` },
+    headers: { Authorization: `Bearer ${LOGIN_TOKEN}` },
 };
 
 export const API = axios.create(axiosConfig);

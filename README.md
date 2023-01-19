@@ -10,9 +10,8 @@
 
 | ### 로그인                             | ### 회원가입                           |
 | -------------------------------------------- | ------------------------------------------------- |
-|<img src="https://user-images.githubusercontent.com/93601210/213424764-008ee264-91ef-4024-abbc-87941dceb1b3.gif" width="360"|
-
-|<img src="https://user-images.githubusercontent.com/93601210/213424829-ed4ece04-7f22-4030-ba83-d0d2f77e98f3.gif" width="360"|
+|<img src="https://user-images.githubusercontent.com/93601210/213424764-008ee264-91ef-4024-abbc-87941dceb1b3.gif" width="360"/>|
+<img src="https://user-images.githubusercontent.com/93601210/213424829-ed4ece04-7f22-4030-ba83-d0d2f77e98f3.gif" width="360"/>|
 
 
 ## 4. 🏹실행 방법

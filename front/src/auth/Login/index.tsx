@@ -1,7 +1,8 @@
 import { Container, LoginSection } from './style';
 import { Link, useNavigate } from 'react-router-dom';
-import React, { useState } from 'react';
-import { API } from 'Instance';
+import React, { useEffect, useState } from 'react';
+import { API } from 'utils/api';
+import { useToken } from 'hooks/useToken';
 
 const Login = () => {
     const navigate = useNavigate();

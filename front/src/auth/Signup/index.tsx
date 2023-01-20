@@ -2,6 +2,7 @@ import { SignupSection, Container } from './style';
 import { Link, useNavigate } from 'react-router-dom';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API } from 'utils/api';
 
 const Signup = () => {
     const navigate = useNavigate();
@@ -28,7 +29,7 @@ const Signup = () => {
 
         try {
             if (email === '' || password === '') alert('정보를 정확하게 입력해주세요.');
-            const res = await axios.post(`/users/create`, {
+            const res = await API.post(`/users/create`, {
                 email: email,
                 password: password,
             });

@@ -1,6 +1,7 @@
 import axios, { AxiosRequestConfig } from 'axios';
 
-const BASE_URL = 'http://localhost:8080';
+// const BASE_URL = 'http://localhost:8080/';
+const BASE_URL = 'http://mooncloud.shop/api';
 const LOGIN_TOKEN = localStorage.getItem('token');
 
 const axiosConfig: AxiosRequestConfig = {

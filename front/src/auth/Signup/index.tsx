@@ -29,7 +29,7 @@ const Signup = () => {
 
         try {
             if (email === '' || password === '') alert('정보를 정확하게 입력해주세요.');
-            const res = await API.post(`/users/creates`, {
+            const res = await API.post(`/api/users/create`, {
                 email: email,
                 password: password,
             });

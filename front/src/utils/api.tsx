@@ -10,4 +10,3 @@ const axiosConfig: AxiosRequestConfig = {
 };
 
 export const API = axios.create(axiosConfig);
-// API.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';

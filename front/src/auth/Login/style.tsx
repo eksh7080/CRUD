@@ -90,7 +90,7 @@ export const LoginSection = styled.div`
                     font-weight: 600;
 
                     & li {
-                        & button[type='submit'] {
+                        & .loginBtn {
                             padding: 1.6rem 2rem;
                             border: 0;
                             background-color: #d3d3d3;
@@ -103,6 +103,31 @@ export const LoginSection = styled.div`
                             &:hover {
                                 cursor: pointer;
                                 background-color: gray;
+                            }
+                        }
+
+                        & .googleLogin {
+                            margin-top: 1rem;
+                            padding: 1.6rem 2rem;
+                            background-color: #fff;
+                            width: 100%;
+                            font-size: 2.4rem;
+                            border: 1px solid transparent;
+                            font-weight: 600;
+                            box-shadow: 0 2px 1px 0 rgba(155, 155, 155, 0.5);
+
+                            & span {
+                                margin-right: 1rem;
+                                & img {
+                                    width: 24px;
+                                    height: 24px;
+                                    vertical-align: middle;
+                                }
+                            }
+
+                            &:hover {
+                                cursor: pointer;
+                                background-color: #4285f4;
                             }
                         }
                     }

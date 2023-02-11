@@ -3,12 +3,19 @@ import { Link, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { API } from 'utils/api';
 import { useToken } from 'hooks/useToken';
+import { auth } from 'pbase';
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import GoogleSymbol from 'assets/images/googleSymbol.png';
 
 const Login = () => {
     const navigate = useNavigate();
+    const provider = new GoogleAuthProvider();
 
-    const [email, setEmail] = useState<string>('');
-    const [password, setPassword] = useState<string>('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const signInGoole = () => {
+        signInWithPopup(auth, provider).then(res => console.log(res, ' ????'));
+    };
 
     const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
         const target = e.target;
@@ -82,6 +89,18 @@ const Login = () => {
                                 <li>
                                     <button type="submit" className="loginBtn">
                                         로그인
+                                    </button>
+                                </li>
+                                <li>
+                                    <button
+                                        type="button"
+                                        className="googleLogin"
+                                        onClick={signInGoole}
+                                    >
+                                        <span>
+                                            <img src={GoogleSymbol} alt="google" />
+                                        </span>
+                                        <small>Google</small>
                                     </button>
                                 </li>
                             </ul>

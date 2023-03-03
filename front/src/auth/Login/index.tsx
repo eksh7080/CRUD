@@ -2,19 +2,27 @@ import { Container, LoginSection } from './style';
 import { Link, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { API } from 'utils/api';
-import { useToken } from 'hooks/useToken';
 import { auth } from 'pbase';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import GoogleSymbol from 'assets/images/googleSymbol.png';
+import { useAppDispatch } from 'Globalstate/store';
+import { getToken } from 'Globalstate/slices/authSlice';
 
 const Login = () => {
     const navigate = useNavigate();
     const provider = new GoogleAuthProvider();
+    const dispatch = useAppDispatch();
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const signInGoole = () => {
-        signInWithPopup(auth, provider).then(res => console.log(res, ' ????'));
+
+    const signInGoole = async () => {
+        const { user } = await signInWithPopup(auth, provider);
+        // dispatch(getToken());
+        // console.log(user., '??');
+        // const credential = GoogleAuthProvider.credentialFromResult(res);
+        // const token = credential?.accessToken;
+        // localStorage.setItem('token', token);
     };
 
     const changeValue = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +46,7 @@ const Login = () => {
         e.preventDefault();
 
         try {
-            const res = await API.post(`/api/users/login`, {
+            const res = await API.post(`/users/login`, {
                 email: email,
                 password: password,
             });
